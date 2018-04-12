@@ -10,8 +10,7 @@ const userSchema = new mongoose.Schema({
   password: String
 });
 
-// Need to use function because () => doesn't have it's own this
-// context.
+// Before saving, hash the plain text password
 userSchema.pre('save', function(next) {
  const user = this;
 

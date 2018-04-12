@@ -7,7 +7,14 @@ import LocalStrategy from 'passport-local';
 // require this everytime.
 config();
 
-
+/**
+ * Defines local strategy for signin.
+ * 
+ * @param {object} localStrategy configuration object
+ * @param {func} cb the callback function
+ * 
+ * @return {object | boolean} user if password is a match
+ */
 const localLogin = new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
   User.findOne({email}, (err, user) => {
     if (err) return err;
