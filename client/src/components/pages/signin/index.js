@@ -1,48 +1,35 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+
+import Form from '../../Form';
 import * as actions from '../../../actions';
 
 /**
- * @class Form
+ * @class Signin Form
  */
-let Form = (props) => { //eslint-disable-line
-  const { handleSubmit } = props;
-  return (
-    <form onSubmit={(values, e) => handleSubmit(values, e)}>
-      <div>
-        <label htmlFor="email">Email</label>
-        <Field name="email" component="input" type="email" />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <Field name="password" component="input" type="password" />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-  );
-};
-
-Form = reduxForm({
-  // a unique name for the form
-  form: 'signin',
-  fields: ['email', 'password'],
-})(Form);
-
 class Signin extends Component {
+  static proptypes = {
+    signinUser: PropTypes.func.isRequired,
+  }
+  /**
+   * Is fired when user clicks the submit button
+   *
+   * @param {event} e the synthetic event
+   */
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
-
-    debugger; //eslint-disable-line
-    this.props.signinUser({ email: e.target.email.value, password: e.target.password.value });
+    const { email: { value: emailValue }, password: { value: passwordValue } } = e.target;
+    const { signinUser } = this.props;
+    signinUser({ email: emailValue, password: passwordValue });
   }
 
+  /** @inheritDoc */
   render() {
     return (
-      <Form handleSubmit={this.handleSubmit} />
+      <div>
+        <Form handleSubmit={this.handleSubmit} {...this.props} />
+      </div>
     );
   }
 }

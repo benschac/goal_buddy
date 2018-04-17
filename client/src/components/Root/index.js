@@ -9,6 +9,7 @@ import history from '../../utils/history';
 
 import App from '../App';
 import Signin from '../pages/signin';
+import Signout from '../pages/signout';
 import rootReducer from '../../reducers';
 
 const store = createStore(rootReducer, applyMiddleware(logger, reduxThunk));
@@ -20,10 +21,11 @@ const store = createStore(rootReducer, applyMiddleware(logger, reduxThunk));
  */
 export default () => (
   <Provider store={store}>
-    <Router history={history}>
+    <Router>
       <Fragment>
         <Route path="/" component={App} />
         <Route path="/signin" component={Signin} />
+        <Route path="/signout" component={Signout} />
       </Fragment>
     </Router>
   </Provider>

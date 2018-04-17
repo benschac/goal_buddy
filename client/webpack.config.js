@@ -22,7 +22,7 @@ module.exports = {
         ],
       },
       {
-        tecurst: /\.css$/,
+        test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
