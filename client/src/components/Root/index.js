@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import logger from 'redux-logger';
+import reduxThunk from 'redux-thunk';
+
+import history from '../../utils/history';
 
 import App from '../App';
+import Signin from '../pages/signin';
 import rootReducer from '../../reducers';
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+const store = createStore(rootReducer, applyMiddleware(logger, reduxThunk));
 
 /**
  * The root of the application
@@ -16,8 +20,11 @@ const store = createStore(rootReducer, applyMiddleware(logger));
  */
 export default () => (
   <Provider store={store}>
-    <Router>
-      <Route path="/" component={App} />
+    <Router history={history}>
+      <Fragment>
+        <Route path="/" component={App} />
+        <Route path="/signin" component={Signin} />
+      </Fragment>
     </Router>
   </Provider>
 );

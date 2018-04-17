@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
+// Curious if it's possible to do this with a class
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -25,6 +26,15 @@ userSchema.pre('save', function(next) {
   });
 });
 
+/**
+ * Adds method on to the userSchema class
+ * Checks if the user provided password matches the password in the instance
+ * 
+ * @param {string} canidatePassword
+ * @param {func} cb the callback function
+ * 
+ * @return {bool} if the password is a match
+ */
 userSchema.methods.comparePassword = function(canidatePassword, cb) {
   bcrypt.compare(canidatePassword, this.password, (err, isMatch) => {
     if (err) return cb(err);
@@ -33,5 +43,5 @@ userSchema.methods.comparePassword = function(canidatePassword, cb) {
   });
 };
 
-const ModelClass = mongoose.model('user', userSchema);
-export default ModelClass;
+// The exported UserClass
+export default mongoose.model('user', userSchema);

@@ -5,14 +5,15 @@ import passport from 'passport';
 const requireAuth = passport.authenticate('jwt', { session: false});
 const requireSignin = passport.authenticate('local', { session: false});
 
+/**
+ * 
+ * @param {*} app 
+ */
 export default function(app) {
-  // Protected route, need token
-  app.get('/', requireAuth, (req, res) => {
-    res.send('hello you are in');
-  });
+  // Protected route, need token or redirected
+  app.get('/', requireAuth, (req, res) => res.send({message: 'code1234'}));
 
-  // get token
+  // User sessions
   app.post('/signin', requireSignin, signin);
-  // get token
   app.post('/signup', signup);
 }
