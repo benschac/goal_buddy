@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { post } from 'axios';
 import history from '../utils/history';
 import { saveLocalStorage } from '../utils/localStorage';
-import { AUTH_USER, AUTH_ERROR, UNAUTH_USER } from '../actions/types';
+import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, SIGNUP_USER, SIGNUP_ERROR } from '../actions/types';
 
 const ROOT_URL = 'http://localhost:3000';
 
@@ -24,7 +24,7 @@ export const authError = error => ({
  * @return {redux.action} the action
  */
 export const signinUser = ({ email, password }) => (dispatch) => { //eslint-disable-line
-  axios.post(`${ROOT_URL}/signin`, {
+  post(`${ROOT_URL}/signin`, {
     email, password,
   }).then((res) => {
     dispatch({
@@ -50,3 +50,48 @@ export const signoutUser = () => {
     payload: 'Signed out user',
   };
 };
+
+/**
+ *
+ * @param {string} error
+ *
+ * @return {redux.action} the action
+ */
+export const signupError = error => ({
+  type: SIGNUP_ERROR,
+  payload: error,
+});
+
+
+/**
+ * Signsup the user
+ *
+ * @param {string} email the user email
+ * @param {string} password the user password
+ *
+ * @return {redux.action} the action
+ */
+export const signupUser = ({ email, password }) => (dispatch) => {
+  post(`${ROOT_URL}/signup`, {
+    email,
+    password,
+  })
+    .then((res) => {
+      dispatch({
+        type: SIGNUP_USER,
+      });
+      saveLocalStorage('token', res.data.token);
+      history.push('/feature');
+    })
+    .catch(() => {
+      dispatch(signupError('Account is already registered to the email'));
+    });
+};
+
+/**
+ * If password confirmation fails
+ *
+ * @return {redux.action} the action
+ */
+export const signupPasswordMissmatch = () => signupError('Passwords do not match');
+

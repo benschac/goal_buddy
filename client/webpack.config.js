@@ -1,7 +1,9 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-
+/**
+ * The Webpack config object
+ */
 module.exports = {
   module: {
     rules: [
@@ -28,9 +30,9 @@ module.exports = {
     ],
   },
   devtool: 'source-map',
-  // devServer: {
-  //   historyApiFallback: true,
-  // },
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
     new HtmlWebPackPlugin({
       template: './src/index.html',

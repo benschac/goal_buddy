@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Form from '../../Form';
+import Form from './signinform';
 import * as actions from '../../../actions';
+import { inputs, submit, fields } from './signinMeta';
+
 
 /**
  * @class Signin Form
@@ -28,11 +30,17 @@ class Signin extends Component {
   render() {
     return (
       <div>
-        <Form handleSubmit={this.handleSubmit} {...this.props} />
+        {/* Create a module for forms and input fields */}
+        <Form
+          handleSubmit={this.handleSubmit}
+          inputs={inputs}
+          submit={submit}
+          fields={fields}
+          {...this.props}
+        />
       </div>
     );
   }
 }
-
 export default connect(null, actions)(Signin);
 

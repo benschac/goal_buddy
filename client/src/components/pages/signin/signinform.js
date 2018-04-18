@@ -6,16 +6,26 @@ import { reduxForm, Field } from 'redux-form';
  * @class Form
  */
 let Form = (props) => { //eslint-disable-line
-  const { handleSubmit, error, errorTest } = props;
+  const {
+    handleSubmit, error,
+  } = props;
   return (
     <form onSubmit={(values, e) => handleSubmit(values, e)}>
       <div>
         <label htmlFor="email">Email</label>
-        <Field name="email" component="input" type="email" />
+        <Field
+          name="email"
+          component="input"
+          type="email"
+        />
       </div>
       <div>
         <label htmlFor="password">Password</label>
-        <Field name="password" component="input" type="password" />
+        <Field
+          name="password"
+          component="input"
+          type="password"
+        />
       </div>
       {error}
       <button type="submit">Submit</button>

@@ -3,10 +3,9 @@ import Header from '../Header';
 /**
  * @class App
  */
-export default ({ children }) => (
+export default () => (
   <div>
     <Header />
-    {children}
   </div>
 );
 

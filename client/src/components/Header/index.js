@@ -10,8 +10,8 @@ const Header = ({ authenticated }) =>
   (
     <nav>
       <ul>
+        {console.log('header')}
         <li><NavLink to="/">Home</NavLink></li>
-        {console.log(authenticated)}
         {
           authenticated
           ? <li><NavLink to="/signout">Sign Out</NavLink></li>
