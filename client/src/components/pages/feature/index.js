@@ -1,13 +1,24 @@
-import React from 'react';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../../actions';
 /**
  * @class Feature
  */
-const Feature = () => (
-  <div>
-      Hello from feature
-  </div>
-);
+class Feature extends Component {
+  /** @inheritDoc */
+  componentWillMount() {
+    this.props.getAuthedMessage();
+  }
+
+  /** @inheritDoc */
+  render() {
+    return (
+      <div>
+         Hello from feature
+      </div>
+    );
+  }
+}
 
 
-export default Feature;
+export default connect(null, actions)(Feature);

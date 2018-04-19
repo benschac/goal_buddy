@@ -5,6 +5,7 @@ import { Router, Route } from 'react-router-dom';
 import logger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 
+import { loadLocalStorage } from '../../utils/localStorage';
 import history from '../../utils/history';
 
 import App from '../App';
@@ -14,9 +15,13 @@ import Signup from '../pages/signup';
 import Feature from '../pages/feature';
 import PrivateRoute from '../PrivateRoute';
 import rootReducer from '../../reducers';
+import { AUTH_USER } from '../../actions/types';
 
 const store = createStore(rootReducer, applyMiddleware(logger, reduxThunk));
 
+if (loadLocalStorage('token')) {
+  store.dispatch({ type: AUTH_USER });
+}
 
 /**
  * The root of the application

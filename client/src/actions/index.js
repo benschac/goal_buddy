@@ -1,7 +1,7 @@
-import { post } from 'axios';
+import { post, get } from 'axios';
 import history from '../utils/history';
-import { saveLocalStorage } from '../utils/localStorage';
-import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, SIGNUP_USER, SIGNUP_ERROR } from '../actions/types';
+import { saveLocalStorage, loadLocalStorage } from '../utils/localStorage';
+import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, SIGNUP_USER, SIGNUP_ERROR, AUTH_RESPONSE } from '../actions/types';
 
 const ROOT_URL = 'http://localhost:3000';
 
@@ -44,7 +44,7 @@ export const signinUser = ({ email, password }) => (dispatch) => { //eslint-disa
  * @return {redux.action} the action
  */
 export const signoutUser = () => {
-  saveLocalStorage('token', {});
+  saveLocalStorage('token', null);
   return {
     type: UNAUTH_USER,
     payload: 'Signed out user',
@@ -95,3 +95,16 @@ export const signupUser = ({ email, password }) => (dispatch) => {
  */
 export const signupPasswordMissmatch = () => signupError('Passwords do not match');
 
+export const getAuthedMessage = () => (dispatch) => {
+  get(ROOT_URL, {
+    headers: {
+      authorization: loadLocalStorage('token'),
+    },
+  })
+    .then((res) => {
+      dispatch({
+        type: AUTH_RESPONSE,
+        payload: res.data,
+      });
+    });
+};
