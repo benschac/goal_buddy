@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
+import Timer from '../../Timer';
 /**
  * @class Feature
  */
@@ -15,10 +16,10 @@ class Feature extends Component {
     return (
       <div>
          Hello from feature
+        <Timer remaining={30} />
       </div>
     );
   }
 }
-
 
 export default connect(null, actions)(Feature);

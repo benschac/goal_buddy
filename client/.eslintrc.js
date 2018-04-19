@@ -4,7 +4,9 @@ module.exports = {
     "extends": "airbnb",
     "globals": {
         "document": true,
-        "localStorage": true
+        "localStorage": true,
+        "window": true,
+        "Notification": true
     },
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
