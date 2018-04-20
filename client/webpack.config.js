@@ -24,7 +24,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
+        test: /\.global\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
@@ -39,7 +39,7 @@ module.exports = {
       filename: './index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: '[name].global.css',
       chunkFilename: '[id].css',
     }),
   ],

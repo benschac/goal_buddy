@@ -16,7 +16,7 @@ class Feature extends Component {
     return (
       <div>
          Hello from feature
-        <Timer remaining={30} />
+        <Timer remaining={2} />
       </div>
     );
   }

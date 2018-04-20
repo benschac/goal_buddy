@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import Donut from '../Data-Visualizations/Donut';
 import { loadLocalStorage, saveLocalStorage } from '../../utils/localStorage';
 import timeFormat, { SECONDS, MILLISECONDS } from '../../utils/timeFormat';
 
@@ -28,9 +29,19 @@ class Timer extends Component {
 
   /** @inheritDoc */
   componentWillMount() {
+    window.addEventListener('beforeunload', (e) => {
+      if (this.state.enabled) {
+        e.preventDefault();
+        saveLocalStorage('remaining', this.state);
+        const confirmationMessage = '\o/';
+        e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
+        return confirmationMessage;
+      }
+    });
+
     if (loadLocalStorage('remaining')) {
       this.setState({
-        remaining: loadLocalStorage('remaining'),
+        remaining: loadLocalStorage('remaining').remaining,
       });
     }
 
@@ -50,13 +61,15 @@ class Timer extends Component {
 
   /** @inheritDoc */
   componentWillUpdate() {
+    // Might not need this if we're saving state internally
     this.throttleSave(this.state);
   }
 
   /** @inheritDoc */
   componentWillUnmount() {
-    clearInterval(interval);
+    window.removeEventListener('beforeunload');
     saveLocalStorage('remaining', this.state);
+    clearInterval(interval);
   }
 
   onStartTimer = () => {
@@ -68,6 +81,7 @@ class Timer extends Component {
 
   onPauseTimer = () => {
     clearInterval(interval);
+    saveLocalStorage('remaining', this.state);
     this.setState({
       enabled: false,
     });
@@ -108,7 +122,9 @@ class Timer extends Component {
     const { enabled, remaining } = this.state;
     return (
       <div>
-        {timeFormat(remaining)}
+        <div style={{ position: 'fixed', bottom: 0 }}>
+          {timeFormat(remaining)}
+        </div>
         {
         enabled
         ?
@@ -126,6 +142,16 @@ class Timer extends Component {
         <button onClick={this.onRestart}>
         Restart
         </button>
+        <Donut
+          height={500}
+          width={960}
+          innerRadius={230}
+          outerRadius={240}
+          progress={remaining}
+          progressFill="#0080ff"
+          backgroundFill="#ddd"
+          totalTime={2 * SECONDS * MILLISECONDS}
+        />
       </div>
     );
   }
