@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Donut from '../Data-Visualizations/Donut';
 import { loadLocalStorage, saveLocalStorage } from '../../utils/localStorage';
-import timeFormat, { SECONDS, MILLISECONDS } from '../../utils/timeFormat';
+import timeFormat, { getTotalMilliseconds } from '../../utils/timeFormat';
+
+import './index.css';
 
 
 let interval;
@@ -21,22 +23,26 @@ class Timer extends Component {
 
   constructor(props) {
     super(props);
-    this.remaining = this.props.remaining * SECONDS * MILLISECONDS;
+    this.remaining = getTotalMilliseconds(this.props.remaining);
     this.throttleSave = _.throttle(saveLocalStorage, 1000);
   }
 
-  state = { enabled: false, remaining: this.props.remaining }
+  state = { enabled: false, remaining: this.props.remaining, restarted: false }
 
   /** @inheritDoc */
   componentWillMount() {
+    // Todo -- This might be something I want to refactor for any field with a value
+    // in it.
     window.addEventListener('beforeunload', (e) => {
       if (this.state.enabled) {
         e.preventDefault();
         saveLocalStorage('remaining', this.state);
-        const confirmationMessage = '\o/';
+        const confirmationMessage = '\o/'; //eslint-disable-line
         e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
         return confirmationMessage;
       }
+
+      return 0;
     });
 
     if (loadLocalStorage('remaining')) {
@@ -54,7 +60,7 @@ class Timer extends Component {
   componentWillReceiveProps({ remaining }) {
     if (remaining !== this.props.remaining) {
       this.setState({
-        remaining: remaining * SECONDS * MILLISECONDS,
+        remaining: getTotalMilliseconds(remaining),
       });
     }
   }
@@ -72,13 +78,20 @@ class Timer extends Component {
     clearInterval(interval);
   }
 
+  /**
+   * Fired on start of Timer
+   */
   onStartTimer = () => {
     this.tick(Date.now());
     this.setState({
       enabled: true,
+      restarted: false,
     });
   }
 
+  /**
+   * Fired on pause of timer
+   */
   onPauseTimer = () => {
     clearInterval(interval);
     saveLocalStorage('remaining', this.state);
@@ -87,10 +100,14 @@ class Timer extends Component {
     });
   }
 
+  /**
+   * Fired on restart of timer
+   */
   onRestart = () => {
     this.onPauseTimer();
     this.setState({
       remaining: this.remaining,
+      restarted: true,
     });
   }
 
@@ -103,11 +120,12 @@ class Timer extends Component {
     const { remaining } = this.state;
     const endTime = startTime + remaining;
     interval = setInterval(() => {
+      let remaining = endTime - Date.now(); //eslint-disable-line
       this.setState({
-        remaining: endTime - Date.now(),
+        remaining,
       });
 
-      if ((endTime - Date.now()) < 0) {
+      if (remaining <= 0) {
         this.onPauseTimer();
         new Notification('Times up, take a break!'); //eslint-disable-line
         this.setState({
@@ -119,13 +137,12 @@ class Timer extends Component {
 
   /** @inheritDoc */
   render() {
-    const { enabled, remaining } = this.state;
+    const { enabled, remaining, restarted } = this.state;
     return (
-      <div>
-        <div style={{ position: 'fixed', bottom: 0 }}>
+      <div className="timer">
+        <div className="timer__controls">
           {timeFormat(remaining)}
-        </div>
-        {
+          {
         enabled
         ?
         (
@@ -139,18 +156,20 @@ class Timer extends Component {
           </button>
         )
       }
-        <button onClick={this.onRestart}>
+          <button onClick={this.onRestart}>
         Restart
-        </button>
+          </button>
+        </div>
         <Donut
           height={500}
           width={960}
           innerRadius={230}
           outerRadius={240}
+          isReset={restarted}
           progress={remaining}
           progressFill="#0080ff"
           backgroundFill="#ddd"
-          totalTime={2 * SECONDS * MILLISECONDS}
+          totalTime={getTotalMilliseconds(2)}
         />
       </div>
     );

@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { MILLISECONDS, SECONDS } from '../../../../utils/timeFormat';
+import { getMinutes } from '../../../../utils/timeFormat';
 
 const tau = 2 * Math.PI; // http://tauday.com/tau-manifesto
 
@@ -14,10 +14,12 @@ class D3Chart {
     this.arc = d3.arc();
   }
   /**
+   * Create a new visualization
    *
-   * @param {*} element
-   * @param {*} props
-   * @param {*} state
+   * @param {element} element
+   * @param {object} props
+   *
+   * @return element the svg
    */
   create = (element, props) => {
     const { innerRadius, outerRadius, backgroundFill } = props;
@@ -43,23 +45,31 @@ class D3Chart {
 
 
   /**
+   * Updates Visualization
    *
-   * @param {*} element
-   * @param {*} state
+   * @param {element} element
+   * @param {object} state the progress and total time
    */
   update = (element, props, state) => {
     const { progress, totalTime } = state;
     const { progressFill } = props;
-    const progressToMinutes = (progress / MILLISECONDS) / SECONDS;
-    const totalTimeToMinutes = (totalTime / MILLISECONDS) / SECONDS;
-
-    const convertedTime = ((totalTimeToMinutes - progressToMinutes) * tau);
+    const progressToMinutes = getMinutes(progress);
+    const totalTimeToMinutes = getMinutes(totalTime);
+    const convertedTime = ((totalTimeToMinutes - progressToMinutes) * tau) / 2;
 
 
     d3.select(element).selectAll('g').append('path')
-      .datum({ endAngle: convertedTime / 2 })
+      .datum({ endAngle: convertedTime })
       .style('fill', progressFill)
       .attr('d', this.arc);
+  }
+
+  /**
+   * Remove the svgs from the component
+   * @param {element}
+   */
+  destroy = (element) => {
+    d3.select(element).selectAll('g').remove();
   }
 }
 

@@ -24,9 +24,13 @@ module.exports = {
         ],
       },
       {
-        test: /\.global\.css$/,
+        test: /\.(global\.css|css)$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
+      // {
+      //   test: /\.css$/,
+      //   use: ['style-loader'],
+      // },
     ],
   },
   devtool: 'source-map',
