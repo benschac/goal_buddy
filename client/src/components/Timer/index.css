@@ -1,7 +1,8 @@
-.timer {
-  position: relative;
-}
+.timer 
+  position: relative
+  background: red
 
-.timer__controlls {
+
+.timer__controls 
   position: absolute
-}
+  background: blue

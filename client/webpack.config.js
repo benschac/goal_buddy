@@ -1,6 +1,8 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const devMode = process.env.NODE_ENV !== 'production';
+
 /**
  * The Webpack config object
  */
@@ -24,13 +26,22 @@ module.exports = {
         ],
       },
       {
-        test: /\.(global\.css|css)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.s?[ac]ss$/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options:
+            {
+              sourceMap: true,
+              modules: true,
+              localIdentName: '[local]___[hash:base64:5]',
+              importLoaders: 1,
+            },
+          },
+          'postcss-loader',
+        ],
       },
-      // {
-      //   test: /\.css$/,
-      //   use: ['style-loader'],
-      // },
     ],
   },
   devtool: 'source-map',
@@ -43,8 +54,10 @@ module.exports = {
       filename: './index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].global.css',
-      chunkFilename: '[id].css',
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
   ],
 };

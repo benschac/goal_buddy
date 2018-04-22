@@ -55,7 +55,7 @@ class D3Chart {
     const { progressFill } = props;
     const progressToMinutes = getMinutes(progress);
     const totalTimeToMinutes = getMinutes(totalTime);
-    const convertedTime = ((totalTimeToMinutes - progressToMinutes) * tau) / 2;
+    const convertedTime = ((totalTimeToMinutes - progressToMinutes) * tau) / totalTimeToMinutes;
 
 
     d3.select(element).selectAll('g').append('path')

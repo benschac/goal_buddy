@@ -4,8 +4,7 @@ import _ from 'lodash';
 import Donut from '../Data-Visualizations/Donut';
 import { loadLocalStorage, saveLocalStorage } from '../../utils/localStorage';
 import timeFormat, { getTotalMilliseconds } from '../../utils/timeFormat';
-
-import './index.css';
+import classNames from './index.css';
 
 
 let interval;
@@ -139,23 +138,23 @@ class Timer extends Component {
   render() {
     const { enabled, remaining, restarted } = this.state;
     return (
-      <div className="timer">
-        <div className="timer__controls">
+      <div className={classNames.timer}>
+        <div className={classNames.timer__controls}>
           {timeFormat(remaining)}
           {
-        enabled
-        ?
-        (
-          <button onClick={this.onPauseTimer}>
-            Stop
-          </button>
-        )
-        : (
-          <button onClick={this.onStartTimer}>
-            Start
-          </button>
-        )
-      }
+            enabled
+            ?
+              (
+                <button onClick={this.onPauseTimer}>
+                  Stop
+                </button>
+              )
+              : (
+                <button onClick={this.onStartTimer}>
+                  Start
+                </button>
+              )
+          }
           <button onClick={this.onRestart}>
         Restart
           </button>
@@ -169,7 +168,7 @@ class Timer extends Component {
           progress={remaining}
           progressFill="#0080ff"
           backgroundFill="#ddd"
-          totalTime={getTotalMilliseconds(2)}
+          totalTime={getTotalMilliseconds(this.props.remaining)}
         />
       </div>
     );
