@@ -138,7 +138,7 @@ class Timer extends Component {
   render() {
     const { enabled, remaining, restarted } = this.state;
     return (
-      <div className={classNames.timer}>
+      <div className="timer">
         <div className={classNames.timer__controls}>
           {timeFormat(remaining)}
           {
@@ -155,7 +155,7 @@ class Timer extends Component {
                 </button>
               )
           }
-          <button onClick={this.onRestart}>
+          <button className="hello" onClick={this.onRestart}>
         Restart
           </button>
         </div>

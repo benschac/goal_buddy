@@ -2,6 +2,9 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
+const path = require('path');
+
+console.log(path.join(__dirname, 'node_modules/basscss/css/basscss.min.css'));
 
 /**
  * The Webpack config object
@@ -26,7 +29,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.s?[ac]ss$/,
+        test: /^((?!\.global).)*\.s?[ac]ss$/,
         use: [
           devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
           {
@@ -40,6 +43,15 @@ module.exports = {
             },
           },
           'postcss-loader',
+        ],
+      },
+      {
+        test: /\.global\.css$/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+          },
         ],
       },
     ],
