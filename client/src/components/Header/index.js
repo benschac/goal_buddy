@@ -3,22 +3,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import { headerCls, logo, nav__items } from './index.css';
+
+
 /**
  * @class Header
  */
 const Header = ({ authenticated }) =>
   (
-    <nav>
-      <ul>
-        {console.log('header')}
-        <li><NavLink to="/">Home</NavLink></li>
+    <nav className={`${headerCls}`}>
+      <ul className="flex flex-wrap">
+        <li className={`${logo} ml3 h3`}><NavLink to="/">Goal Buddy</NavLink></li>
         {
           authenticated
-          ? <li><NavLink to="/signout">Sign Out</NavLink></li>
+          ? <li><NavLink className={`${nav__items} mr2 h3`} to="/signout">Sign Out</NavLink></li>
           : (
             <Fragment>
-              <li><NavLink to="/signin">Sign In</NavLink></li>
-              <li><NavLink to="/signup">Sign Up</NavLink></li>
+              <li className={`${nav__items} mr2 h3`}><NavLink to="/about">About</NavLink></li>
+              <li className={`${nav__items} mr2 h3`}><NavLink to="/signin">Sign In</NavLink></li>
+              <li className={`${nav__items} mr3 h3`}><NavLink to="/signup">Sign Up</NavLink></li>
             </Fragment>
           )
         }

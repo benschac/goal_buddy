@@ -14,6 +14,7 @@ import Signin from '../pages/signin';
 import Signout from '../pages/signout';
 import Signup from '../pages/signup';
 import Feature from '../pages/feature';
+import About from '../pages/about';
 import PrivateRoute from '../PrivateRoute';
 import rootReducer from '../../reducers';
 import { AUTH_USER } from '../../actions/types';
@@ -37,6 +38,7 @@ export default () => (
         <Route path="/signin" component={Signin} />
         <Route path="/signout" component={Signout} />
         <Route path="/signup" component={Signup} />
+        <Route path="/about" component={About} />
         <PrivateRoute path="/feature" component={Feature} />
       </Fragment>
     </Router>
