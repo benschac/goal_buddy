@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Arch from '../base/D3Arc';
+// Todo -- Let's change this rule in our linter
+import { container__svg } from './index.css'; //eslint-disable-line
 
 // Todo -- This component might need to be more generic
 // right now it's handling a v. specific case for the Timer component
@@ -21,6 +23,8 @@ class Donut extends Component {
     progressFill: PropTypes.string.isRequired,
     /** Passed in milliseconds */
     totalTime: PropTypes.number.isRequired,
+    /** The children */
+    children: PropTypes.element.isRequired,
   }
 
   /** @inheritDoc */
@@ -79,9 +83,19 @@ class Donut extends Component {
 
   /** @inheritDoc */
   render() {
-    const { height, width } = this.props;
+    const { children } = this.props;
     return (
-      <svg width={width} height={height} ref={el => this.element = el} /> //eslint-disable-line
+      <div className={container__svg}>
+        {children}
+        <svg
+          width="100%"
+          height="500"
+          viewBox="0 0 960 500"
+          preserveAspectRatio="xMidYMid meet"
+          className="arc"
+          ref={el => this.element = el}
+        /> {/* //eslint-disable-line */}
+      </div>
     );
   }
 }

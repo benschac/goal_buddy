@@ -24,7 +24,6 @@ class Feature extends Component {
     const { remaining } = this.props;
     return (
       <div>
-         Hello from feature
         <Form placeholder={remaining} value={remaining} />
         <Timer remaining={remaining} />
       </div>

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Donut from '../Data-Visualizations/Donut';
+import Button from '../Button';
 import { loadLocalStorage, saveLocalStorage } from '../../utils/localStorage';
 import timeFormat, { getTotalMilliseconds } from '../../utils/timeFormat';
-import classNames from './index.css';
+import { timer__controls, timer } from './index.css';
 
 
 let interval;
@@ -133,43 +134,59 @@ class Timer extends Component {
       }
     }, 100);
   }
-
+  // Remove hard coded color values, use css variables
   /** @inheritDoc */
   render() {
     const { enabled, remaining, restarted } = this.state;
     return (
-      <div className="timer">
-        <div className={classNames.timer__controls}>
-          {timeFormat(remaining)}
-          {
-            enabled
-            ?
-              (
-                <button onClick={this.onPauseTimer}>
-                  Stop
-                </button>
-              )
-              : (
-                <button onClick={this.onStartTimer}>
-                  Start
-                </button>
-              )
-          }
-          <button className="hello" onClick={this.onRestart}>
-        Restart
-          </button>
-        </div>
+      <div className={timer}>
         <Donut
           height={500}
-          width={960}
-          innerRadius={230}
-          outerRadius={240}
+          width={760}
+          innerRadius={190}
+          outerRadius={200}
           isReset={restarted}
           progress={remaining}
-          progressFill="#0080ff"
+          progressFill="#778FA8"
           backgroundFill="#ddd"
           totalTime={getTotalMilliseconds(this.props.remaining)}
-        />
+        >
+
+          <div className={timer__controls}>
+            <span className="h2 mb3">{timeFormat(remaining)}</span>
+            <br />
+            <span>
+              {
+                enabled
+                ?
+                  (
+                    <div className="mb1 mt1">
+                      <Button
+                        onClick={this.onPauseTimer}
+                        content="Pause"
+                      />
+                    </div>
+                  )
+                : (
+                  <div className="mb2 mt1">
+                    <div className="mb1">
+                      <Button
+                        onClick={this.onStartTimer}
+                        content="Start"
+                      />
+                    </div>
+
+                    <Button
+                      onClick={this.onRestart}
+                      content="Restart"
+                    />
+                  </div>
+
+                )
+              }
+            </span>
+          </div>
+        </Donut>
       </div>
     );
   }

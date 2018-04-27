@@ -33,9 +33,10 @@ class D3Chart {
       .outerRadius(outerRadius)
       .startAngle(0);
     const svg = d3.select(element);
-    const width = +svg.attr('width');
+    const width = +svg.node().getBoundingClientRect().width;
     const height = +svg.attr('height');
-    const g = svg.append('g').attr('transform', `translate(${width / 2},${height / 2})`);
+    // Let's look for a better way to do this in the future
+    const g = svg.append('g').attr('transform', `translate(${485},${height / 2})`);
 
     g.append('path')
       .datum({ endAngle: tau })

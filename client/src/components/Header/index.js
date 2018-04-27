@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { headerCls, logo, nav__items } from './index.css';
+import { meta, navLink } from './meta';
 
 
 /**

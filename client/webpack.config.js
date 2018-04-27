@@ -2,9 +2,6 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
-const path = require('path');
-
-console.log(path.join(__dirname, 'node_modules/basscss/css/basscss.min.css'));
 
 /**
  * The Webpack config object

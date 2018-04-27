@@ -1,5 +1,13 @@
+.timer {
+
+}
 
 .timer__controls  {
+  z-index: 2;
+  align-self: center; 
   position: absolute;
-  background: blue;
+  display: block;
+  width: 100%;
+  top: 40%;
 }
+

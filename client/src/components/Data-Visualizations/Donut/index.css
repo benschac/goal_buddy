@@ -1,0 +1,16 @@
+.container__svg {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  min-width: 700px;
+  vertical-align: top;
+  text-align: center;
+  overflow: hidden;
+}
+/* // not sure what this does */
+.svg-content {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
