@@ -1,0 +1,9 @@
+.container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 25% auto;
+}
+
+.aside__container {
+  border-right: 2px solid var(--azureishWhite);
+}

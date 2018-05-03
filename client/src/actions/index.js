@@ -23,6 +23,7 @@ export const authError = error => ({
  *
  * @return {redux.action} the action
  */
+// Todo -- convert into async and await
 export const signinUser = ({ email, password }) => (dispatch) => { //eslint-disable-line
   post(`${ROOT_URL}/signin`, {
     email, password,

@@ -7,10 +7,20 @@
   text-align: center;
   overflow: hidden;
 }
+
+.container__controls {
+  
+}
+
 /* // not sure what this does */
 .svg-content {
   display: inline-block;
   position: absolute;
   top: 0;
   left: 0;
+}
+
+
+:global(.arc) {
+  height: 100vh;
 }

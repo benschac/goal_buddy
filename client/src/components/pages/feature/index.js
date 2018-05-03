@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
+import TwoColumnLarge from '../layout/TwoColumnLarge';
 import Timer from '../../Timer';
 import Form from './Form';
 /**
@@ -23,10 +24,10 @@ class Feature extends Component {
   render() {
     const { remaining } = this.props;
     return (
-      <div>
-        <Form placeholder={remaining} value={remaining} />
-        <Timer remaining={remaining} />
-      </div>
+      <TwoColumnLarge
+        aside={<Form placeholder={remaining} value={remaining} />}
+        main={<Timer remaining={remaining} />}
+      />
     );
   }
 }

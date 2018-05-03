@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Arch from '../base/D3Arc';
 // Todo -- Let's change this rule in our linter
-import { container__svg } from './index.css'; //eslint-disable-line
+import { container__svg, container__children } from './index.css'; //eslint-disable-line
 
 // Todo -- This component might need to be more generic
 // right now it's handling a v. specific case for the Timer component
@@ -89,7 +89,6 @@ class Donut extends Component {
         {children}
         <svg
           width="100%"
-          height="500"
           viewBox="0 0 960 500"
           preserveAspectRatio="xMidYMid meet"
           className="arc"
