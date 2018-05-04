@@ -36,7 +36,7 @@ class Timer extends Component {
     window.addEventListener('beforeunload', (e) => {
       if (this.state.enabled) {
         e.preventDefault();
-        saveLocalStorage('remaining', this.state);
+        saveLocalStorage('remaining', this.state.remaining);
         const confirmationMessage = '\o/'; //eslint-disable-line
         e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
         return confirmationMessage;
@@ -47,7 +47,7 @@ class Timer extends Component {
 
     if (loadLocalStorage('remaining')) {
       this.setState({
-        remaining: loadLocalStorage('remaining').remaining,
+        remaining: loadLocalStorage('remaining'),
       });
     }
 
@@ -103,7 +103,7 @@ class Timer extends Component {
   /**
    * Fired on restart of timer
    */
-  onRestart = () => {
+  onRestartTimer = () => {
     this.onPauseTimer();
     this.setState({
       remaining: this.remaining,
@@ -173,11 +173,12 @@ class Timer extends Component {
                       <Button
                         onClick={this.onStartTimer}
                         content="Start"
+                        classNames="start"
                       />
                     </div>
 
                     <Button
-                      onClick={this.onRestart}
+                      onClick={this.onRestartTimer}
                       content="Restart"
                     />
                   </div>

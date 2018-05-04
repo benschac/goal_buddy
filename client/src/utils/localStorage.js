@@ -8,7 +8,7 @@
 export const loadLocalStorage = (key) => {
   try {
     const serializedData = localStorage.getItem(key);
-    if (serializedData === null) {
+    if (serializedData === null || serializedData === undefined) {
       return false;
     }
     return JSON.parse(serializedData);

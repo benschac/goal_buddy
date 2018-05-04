@@ -1,5 +1,5 @@
 .timer {
-
+  padding: 0;
 }
 
 .timer__controls  {
@@ -10,4 +10,3 @@
   width: 100%;
   top: 37%;
 }
-
