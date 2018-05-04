@@ -36,12 +36,14 @@ class D3Chart {
     const width = +svg.node().getBoundingClientRect().width;
     const height = +svg.attr('height');
     // Let's look for a better way to do this in the future
+    // We shouldn't have to hard code this
     const g = svg.append('g').attr('transform', `translate(${485},${225})`);
 
     g.append('path')
       .datum({ endAngle: tau })
       .style('fill', backgroundFill)
-      .attr('d', this.arc);
+      .attr('d', this.arc)
+      .attr('class', 'background');
   }
 
 
@@ -57,10 +59,14 @@ class D3Chart {
     const progressToMinutes = getMinutes(progress);
     const totalTimeToMinutes = getMinutes(totalTime);
     const convertedTime = ((totalTimeToMinutes - progressToMinutes) * tau) / totalTimeToMinutes;
+
+    d3.select(element).selectAll('.progress').remove();
+
     d3.select(element).selectAll('g').append('path')
       .datum({ endAngle: convertedTime })
       .style('fill', progressFill)
-      .attr('d', this.arc);
+      .attr('d', this.arc)
+      .attr('class', 'progress');
   }
 
   /**

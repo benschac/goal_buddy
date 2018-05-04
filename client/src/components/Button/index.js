@@ -13,9 +13,9 @@ export default function Button({ content, onClick }) {
   );
 }
 
-Button.defaultProps = {
-  onClick: null,
-};
+// Button.defaultProps = {
+//   onClick: null,
+// };
 
 Button.propTypes = {
   /** The Content of the Button */
