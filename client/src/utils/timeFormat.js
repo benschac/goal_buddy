@@ -12,7 +12,7 @@ const zeroPad = number => (number < 10 ? `0${number}` : `${number}`);
  * @param {number} number to pad
  * @return {string} the padded number
  */
-const zeroPadMillisecond = number => (number < 100 ? `0${number}` : `${number}`);
+const zeroPadMillisecond = number => (number < 100 ? `00${number}` : `${number}`);
 
 /**
  * Returns minutes.
